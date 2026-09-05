@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - Bank Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 100vh;
+        }
+
+        .login-card {
+            width: 400px;
+            max-width: 90%;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1e3a8a;
+        }
+
+        .login-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #162d6b;
+        }
+
+        .back-btn {
+            width: 100%;
+
+            padding: 11px;
+
+            margin-top: 12px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #6b7280;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #4b5563;
+        }
+
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc2626;
+        }
+
+        .success {
+            color: #15803d;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="login-card">
+
+        <div class="logo">
+            🔐
+        </div>
+
+        <h1>
+            Admin Login
+        </h1>
+
+        <p class="subtitle">
+            Bank Management System
+        </p>
+
+
+        <form id="adminLoginForm">
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter admin email"
+                required>
+
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter admin password"
+                required>
+
+
+            <button
+                type="submit"
+                class="login-btn">
+
+                🔐 Login as Admin
+
+            </button>
+
+        </form>
+
+
+        <button
+            class="back-btn"
+            onclick="goHome()">
+
+            🏠 Back to Home
+
+        </button>
+
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <script>
+
+        document
+            .getElementById("adminLoginForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const result =
+                    document
+                        .getElementById("result");
+
+
+                result.innerHTML = "";
+
+
+                fetch("/api/admin/login", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email,
+
+                        password: password
+
+                    })
+
+                })
+
+                .then(async response => {
+
+                    const text =
+                        await response.text();
+
+                    let data;
+
+                    try {
+
+                        data =
+                            JSON.parse(text);
+
+                    } catch {
+
+                        data = {};
+
+                    }
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            text ||
+                            "Invalid email or password"
+                        );
+
+                    }
+
+                    return data;
+
+                })
+
+                .then(admin => {
+
+                    result.innerHTML = `
+
+                        <div class="success">
+
+                            ✅ Login successful!
+
+                        </div>
+
+                    `;
+
+
+                    setTimeout(function() {
+
+                        window.location.href =
+                            "/admin-dashboard";
+
+                    }, 700);
+
+                })
+
+                .catch(error => {
+
+                    console.error(error);
+
+                    result.innerHTML = `
+
+                        <div class="error">
+
+                            ❌ ${error.message}
+
+                        </div>
+
+                    `;
+
+                });
+
+            });
+
+
+        function goHome() {
+
+            window.location.href = "/";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

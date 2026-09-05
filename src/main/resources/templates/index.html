@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Bank Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #1e3a8a;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 900px;
+
+            margin: 70px auto;
+
+            padding: 20px;
+        }
+
+        .welcome {
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+        .welcome h1 {
+            color: #1e3a8a;
+
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #666;
+
+            font-size: 17px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 40px 30px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #1e3a8a;
+
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #666;
+
+            min-height: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 12px 25px;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #162d6b;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 70px;
+
+            color: #777;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 20px;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <div class="navbar">
+
+        <h2>
+            🏦 Bank Management System
+        </h2>
+
+        <div class="nav-buttons">
+
+            <a
+                href="/login"
+                class="nav-btn">
+
+                🔐 Login
+
+            </a>
+
+            <a
+                href="/register"
+                class="nav-btn">
+
+                📝 Register
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="container">
+
+
+        <div class="welcome">
+
+            <h1>
+                Welcome to Bank Management System
+            </h1>
+
+            <p>
+                Secure and simple banking management system.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+
+            <!-- LOGIN -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🔐
+                </div>
+
+                <h3>
+                    Customer Login
+                </h3>
+
+                <p>
+                    Login to access your bank account,
+                    balance and banking services.
+                </p>
+
+                <a
+                    href="/login"
+                    class="btn">
+
+                    Login
+
+                </a>
+
+            </div>
+
+
+            <!-- REGISTRATION -->
+
+            <div class="card">
+
+                <div class="icon">
+                    👤
+                </div>
+
+                <h3>
+                    Customer Registration
+                </h3>
+
+                <p>
+                    Create your customer account
+                    to start using our banking services.
+                </p>
+
+                <a
+                    href="/register"
+                    class="btn">
+
+                    Register
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <div class="footer">
+
+            <p>
+                © 2026 Bank Management System
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

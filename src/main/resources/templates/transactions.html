@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction History - Bank Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            border: none;
+
+            padding: 9px 16px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .dashboard-btn {
+            background: white;
+            color: #1e3a8a;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 1100px;
+            max-width: 94%;
+
+            margin: 40px auto;
+        }
+
+        /* ================= HEADER ================= */
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        /* ================= ACCOUNT CARD ================= */
+
+        .account-card {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .account-card strong {
+            color: #1e3a8a;
+        }
+
+        /* ================= TABLE CARD ================= */
+
+        .table-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1e3a8a;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* ================= TRANSACTION TYPES ================= */
+
+        .deposit {
+            color: #15803d;
+
+            font-weight: bold;
+        }
+
+        .withdraw {
+            color: #dc2626;
+
+            font-weight: bold;
+        }
+
+        /* ================= AMOUNT ================= */
+
+        .amount {
+            font-weight: bold;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 40px;
+
+            color: #777;
+
+            font-size: 16px;
+        }
+
+        /* ================= ERROR ================= */
+
+        .error {
+            text-align: center;
+
+            color: #dc2626;
+
+            font-weight: bold;
+
+            padding: 20px;
+        }
+
+        /* ================= LOADING ================= */
+
+        .loading {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #666;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar h2 {
+                font-size: 18px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <div class="navbar">
+
+        <h2>
+            🏦 Bank Management System
+        </h2>
+
+
+        <div class="nav-buttons">
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/customer-dashboard'">
+
+                📊 Dashboard
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/deposit'">
+
+                💰 Deposit
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/withdraw'">
+
+                💸 Withdraw
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/transactions'">
+
+                📋 Transactions
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/customer-dashboard'">
+
+                👤 Profile
+
+            </button>
+
+            <button
+                class="nav-btn logout-btn"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="container">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="page-header">
+
+            <h1>
+                📋 Transaction History
+            </h1>
+
+            <p>
+                View all deposits and withdrawals from your account.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= ACCOUNT ================= -->
+
+        <div class="account-card">
+
+            Account Number:
+
+            <strong id="accountNumber">
+                Loading...
+            </strong>
+
+        </div>
+
+
+
+        <!-- ================= TRANSACTION TABLE ================= -->
+
+        <div class="table-card">
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Transaction Type
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Balance After Transaction
+                        </th>
+
+                        <th>
+                            Date & Time
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="transactionTable">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="loading">
+
+                            Loading transactions...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        /* ==========================================
+           LOAD ACCOUNT NUMBER
+        ========================================== */
+
+        fetch("/api/customers/my-account")
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Customer is not logged in"
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(account => {
+
+                document
+                    .getElementById("accountNumber")
+                    .textContent =
+                    account.accountNumber;
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                document
+                    .getElementById("accountNumber")
+                    .textContent =
+                    "Not available";
+
+            });
+
+
+
+        /* ==========================================
+           LOAD TRANSACTIONS
+        ========================================== */
+
+        fetch("/api/transactions")
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load transactions"
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(transactions => {
+
+
+                const table =
+                    document.getElementById(
+                        "transactionTable"
+                    );
+
+
+                /* No transactions */
+
+                if (
+                    !transactions ||
+                    transactions.length === 0
+                ) {
+
+                    table.innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="empty">
+
+                                📭 No transactions found.
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                    return;
+
+                }
+
+
+
+                /* Clear loading */
+
+                table.innerHTML = "";
+
+
+
+                /* Display transactions */
+
+                transactions.forEach(
+                    (transaction, index) => {
+
+
+                        const row =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        const type =
+                            transaction.type ||
+                            "";
+
+
+                        const typeClass =
+                            type === "DEPOSIT"
+                                ? "deposit"
+                                : "withdraw";
+
+
+                        const typeText =
+                            type === "DEPOSIT"
+                                ? "💰 Deposit"
+                                : "💸 Withdrawal";
+
+
+
+                        row.innerHTML = `
+
+                            <td>
+                                ${index + 1}
+                            </td>
+
+                            <td
+                                class="${typeClass}">
+
+                                ${typeText}
+
+                            </td>
+
+                            <td
+                                class="amount">
+
+                                ₹${Number(
+                                    transaction.amount
+                                ).toFixed(2)}
+
+                            </td>
+
+                            <td>
+
+                                ₹${Number(
+                                    transaction.balanceAfterTransaction
+                                ).toFixed(2)}
+
+                            </td>
+
+                            <td>
+
+                                ${formatDateTime(
+                                    transaction.dateTime
+                                )}
+
+                            </td>
+
+                        `;
+
+
+                        table.appendChild(row);
+
+                    }
+                );
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+
+                document
+                    .getElementById(
+                        "transactionTable"
+                    )
+                    .innerHTML = `
+
+                        <tr>
+
+                            <td
+                                colspan="5"
+                                class="error">
+
+                                ❌ ${error.message}
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+            });
+
+
+
+        /* ==========================================
+           FORMAT DATE AND TIME
+        ========================================== */
+
+        function formatDateTime(dateTime) {
+
+
+            if (!dateTime) {
+
+                return "-";
+
+            }
+
+
+            const date =
+                new Date(dateTime);
+
+
+            if (isNaN(date.getTime())) {
+
+                return dateTime;
+
+            }
+
+
+            return date.toLocaleString();
+
+        }
+
+
+
+        /* ==========================================
+           DASHBOARD
+        ========================================== */
+
+        function goDashboard() {
+
+            window.location.href =
+                "/customer-dashboard";
+
+        }
+
+
+
+        /* ==========================================
+           LOGOUT
+        ========================================== */
+
+        function logout() {
+
+
+            fetch(
+                "/api/customers/logout",
+                {
+                    method: "POST"
+                }
+            )
+
+            .then(() => {
+
+                window.location.href =
+                    "/login";
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+                window.location.href =
+                    "/login";
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

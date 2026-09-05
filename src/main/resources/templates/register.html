@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Registration - Bank Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .home-btn {
+            background: white;
+            color: #1e3a8a;
+
+            border: none;
+            padding: 9px 18px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .home-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .container {
+            width: 450px;
+            max-width: 90%;
+            margin: 50px auto;
+        }
+
+        .card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h3 {
+            text-align: center;
+
+            color: #1e3a8a;
+
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+
+            margin-top: 16px;
+            margin-bottom: 7px;
+
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+
+            border-color: #1e3a8a;
+        }
+
+        /* Profile photo */
+
+        .photo-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .photo-preview {
+            width: 110px;
+            height: 110px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 4px solid #1e3a8a;
+
+            display: none;
+
+            margin: 10px auto 15px;
+        }
+
+        .photo-label {
+            display: inline-block;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .photo-label:hover {
+            background: #162d6b;
+        }
+
+        #profilePhoto {
+            display: none;
+        }
+
+        .photo-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .register-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 25px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .register-btn:hover {
+            background: #162d6b;
+        }
+
+        #result {
+            margin-top: 20px;
+
+            text-align: center;
+
+            line-height: 1.7;
+        }
+
+        .success {
+            color: #15803d;
+
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc2626;
+
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <div class="navbar">
+
+        <h2>
+            🏦 Bank Management System
+        </h2>
+
+        <button
+            class="home-btn"
+            onclick="goHome()">
+
+            🏠 Home
+
+        </button>
+
+    </div>
+
+
+    <!-- Registration -->
+
+    <div class="container">
+
+        <div class="card">
+
+            <h3>
+                Customer Registration
+            </h3>
+
+
+            <form id="registerForm">
+
+
+                <!-- Profile Photo -->
+
+                <div class="photo-section">
+
+                    <img
+                        id="photoPreview"
+                        class="photo-preview"
+                        alt="Profile Preview">
+
+
+                    <label
+                        for="profilePhoto"
+                        class="photo-label">
+
+                        📷 Choose Profile Photo
+
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="profilePhoto"
+                        accept="image/*">
+
+
+                    <div class="photo-note">
+
+                        Profile photo can be selected only
+                        during registration.
+
+                    </div>
+
+                </div>
+
+
+                <!-- Name -->
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter full name">
+
+
+                <!-- Email -->
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter email address">
+
+
+                <!-- Phone -->
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="text"
+                    id="phone"
+                    placeholder="Enter phone number">
+
+
+                <!-- Password -->
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password">
+
+
+                <!-- Register -->
+
+                <button
+                    type="submit"
+                    class="register-btn">
+
+                    Register Customer
+
+                </button>
+
+            </form>
+
+
+            <div id="result"></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let profilePhotoBase64 = "";
+
+
+        // ==========================================
+        // PROFILE PHOTO SELECTION
+        // ==========================================
+
+        document
+            .getElementById("profilePhoto")
+            .addEventListener("change", function(event) {
+
+                const file = event.target.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+
+                // Check image type
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert("Please select an image file.");
+
+                    event.target.value = "";
+
+                    return;
+                }
+
+
+                // Limit size to 2 MB
+
+                if (file.size > 2 * 1024 * 1024) {
+
+                    alert(
+                        "Profile photo must be less than 2 MB."
+                    );
+
+                    event.target.value = "";
+
+                    return;
+                }
+
+
+                const reader = new FileReader();
+
+
+                reader.onload = function(e) {
+
+                    profilePhotoBase64 =
+                        e.target.result;
+
+
+                    // Show preview
+
+                    const preview =
+                        document.getElementById(
+                            "photoPreview"
+                        );
+
+                    preview.src =
+                        profilePhotoBase64;
+
+                    preview.style.display =
+                        "block";
+
+                };
+
+
+                reader.readAsDataURL(file);
+
+            });
+
+
+        // ==========================================
+        // REGISTRATION
+        // ==========================================
+
+        document
+            .getElementById("registerForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const name =
+                        document
+                        .getElementById("name")
+                        .value.trim();
+
+
+                    const email =
+                        document
+                        .getElementById("email")
+                        .value.trim();
+
+
+                    const phone =
+                        document
+                        .getElementById("phone")
+                        .value.trim();
+
+
+                    const password =
+                        document
+                        .getElementById("password")
+                        .value;
+
+
+                    const result =
+                        document
+                        .getElementById("result");
+
+
+                    result.innerHTML = "";
+
+
+                    // ==========================================
+                    // CLIENT-SIDE VALIDATION (instant feedback)
+                    // ==========================================
+
+                    if (name === "") {
+
+                        result.innerHTML = `
+                            <div class="error">
+                                ❌ Please enter your full name.
+                            </div>
+                        `;
+
+                        return;
+                    }
+
+
+                    if (email === "" || !email.includes("@")) {
+
+                        result.innerHTML = `
+                            <div class="error">
+                                ❌ Please enter a valid email address.
+                            </div>
+                        `;
+
+                        return;
+                    }
+
+
+                    if (phone === "" || !/^\d{10}$/.test(phone)) {
+
+                        result.innerHTML = `
+                            <div class="error">
+                                ❌ Phone number must be exactly 10 digits.
+                            </div>
+                        `;
+
+                        return;
+                    }
+
+
+                    if (password === "" || password.length < 6) {
+
+                        result.innerHTML = `
+                            <div class="error">
+                                ❌ Password must be at least 6 characters long.
+                            </div>
+                        `;
+
+                        return;
+                    }
+
+
+                    if (profilePhotoBase64 === "") {
+
+                        result.innerHTML = `
+                            <div class="error">
+                                ❌ Please select a profile photo.
+                            </div>
+                        `;
+
+                        return;
+                    }
+
+
+                    // Send data
+
+                    fetch(
+                        "/api/customers/register",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                name: name,
+
+                                email: email,
+
+                                phone: phone,
+
+                                password: password,
+
+                                profilePhoto:
+                                    profilePhotoBase64
+
+                            })
+
+                        }
+                    )
+
+
+                    .then(async response => {
+
+                        const text = await response.text();
+
+                        if (!response.ok) {
+
+                            let errorMessage = "Registration failed. Please check the details and try again.";
+
+                            try {
+
+                                const errors = JSON.parse(text);
+
+                                // errors is a map like {"phone": "message", "email": "message"}
+                                const messages = Object.values(errors);
+
+                                if (messages.length > 0) {
+
+                                    errorMessage = messages.join(" ");
+
+                                }
+
+                            } catch (parseError) {
+
+                                // Not JSON, use raw text if available
+                                if (text) {
+                                    errorMessage = text;
+                                }
+
+                            }
+
+                            throw new Error(errorMessage);
+
+                        }
+
+                        return JSON.parse(text);
+
+                    })
+
+
+                    .then(data => {
+
+                        result.innerHTML = `
+
+                            <div class="success">
+
+                                Customer Registered
+                                Successfully! 🎉
+
+                                <br><br>
+
+                                Customer ID:
+
+                                <strong>
+                                    ${data.id}
+                                </strong>
+
+                            </div>
+
+                        `;
+
+
+                        document
+                            .getElementById(
+                                "registerForm"
+                            )
+                            .reset();
+
+
+                        document
+                            .getElementById(
+                                "photoPreview"
+                            )
+                            .style.display =
+                            "none";
+
+
+                        profilePhotoBase64 = "";
+
+                    })
+
+
+                    .catch(error => {
+
+                        console.error(error);
+
+                        result.innerHTML = `
+
+                            <div class="error">
+
+                                ❌ ${error.message}
+
+                            </div>
+
+                        `;
+
+                    });
+
+                }
+            );
+
+
+        // ==========================================
+        // HOME
+        // ==========================================
+
+        function goHome() {
+
+            window.location.href = "/";
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Deposit Money - Bank Management System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            border: none;
+
+            padding: 9px 16px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .dashboard-btn {
+            background: white;
+            color: #1e3a8a;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .nav-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 420px;
+            max-width: 90%;
+
+            margin: 70px auto;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            text-align: center;
+
+            color: #1e3a8a;
+
+            margin-top: 0;
+
+            margin-bottom: 25px;
+        }
+
+        /* ================= ACCOUNT INFO ================= */
+
+        .account-info {
+            background: #f4f7fb;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        .account-info strong {
+            color: #1e3a8a;
+        }
+
+        /* ================= BALANCE ================= */
+
+        .balance-info {
+            background: #ecfdf5;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+        }
+
+        .balance-info strong {
+            color: #15803d;
+
+            font-size: 20px;
+        }
+
+        /* ================= FORM ================= */
+
+        label {
+            display: block;
+
+            margin-top: 18px;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+
+            border-color: #1e3a8a;
+        }
+
+        /* ================= DEPOSIT BUTTON ================= */
+
+        .deposit-btn {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-top: 25px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            background: #15803d;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .deposit-btn:hover {
+            background: #166534;
+        }
+
+        /* ================= RESULT ================= */
+
+        #result {
+            margin-top: 20px;
+
+            text-align: center;
+
+            line-height: 1.7;
+        }
+
+        .success {
+            color: #15803d;
+
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc2626;
+
+            font-weight: bold;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar h2 {
+                font-size: 18px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <div class="navbar">
+
+        <h2>
+            🏦 Bank Management System
+        </h2>
+
+
+        <div class="nav-buttons">
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/customer-dashboard'">
+
+                📊 Dashboard
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/deposit'">
+
+                💰 Deposit
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/withdraw'">
+
+                💸 Withdraw
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/transactions'">
+
+                📋 Transactions
+
+            </button>
+
+            <button
+                class="nav-btn dashboard-btn"
+                onclick="window.location.href='/customer-dashboard'">
+
+                👤 Profile
+
+            </button>
+
+            <button
+                class="nav-btn logout-btn"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= DEPOSIT CONTAINER ================= -->
+
+    <div class="container">
+
+        <div class="card">
+
+
+            <h2>
+                💰 Deposit Money
+            </h2>
+
+
+
+            <!-- ================= ACCOUNT NUMBER ================= -->
+
+            <div class="account-info">
+
+                Account Number:
+
+                <strong id="accountNumber">
+
+                    Loading...
+
+                </strong>
+
+            </div>
+
+
+
+            <!-- ================= CURRENT BALANCE ================= -->
+
+            <div class="balance-info">
+
+                Current Balance:
+
+                <br>
+
+                <strong id="currentBalance">
+
+                    ₹ 0.00
+
+                </strong>
+
+            </div>
+
+
+
+            <!-- ================= DEPOSIT FORM ================= -->
+
+            <form id="depositForm">
+
+
+                <label for="amount">
+
+                    Amount
+
+                </label>
+
+
+                <input
+                    type="number"
+                    id="amount"
+                    min="1"
+                    step="0.01"
+                    placeholder="Enter amount"
+                    required>
+
+
+
+                <button
+                    type="submit"
+                    class="deposit-btn">
+
+                    💰 Deposit Money
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- ================= RESULT ================= -->
+
+            <div id="result"></div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        /* ==========================================
+           LOAD LOGGED-IN CUSTOMER ACCOUNT
+        ========================================== */
+
+        fetch("/api/customers/my-account")
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Customer is not logged in"
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+            .then(account => {
+
+
+                /* Account Number */
+
+                document
+                    .getElementById("accountNumber")
+                    .textContent =
+                    account.accountNumber;
+
+
+
+                /* Current Balance */
+
+                document
+                    .getElementById("currentBalance")
+                    .textContent =
+                    "₹ " +
+                    Number(account.balance)
+                        .toFixed(2);
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+
+                document
+                    .getElementById("accountNumber")
+                    .textContent =
+                    "Not available";
+
+
+                document
+                    .getElementById("currentBalance")
+                    .textContent =
+                    "₹ 0.00";
+
+
+                document
+                    .getElementById("result")
+                    .innerHTML = `
+
+                        <div class="error">
+
+                            ❌ ${error.message}
+
+                        </div>
+
+                    `;
+
+            });
+
+
+
+        /* ==========================================
+           DEPOSIT FORM
+        ========================================== */
+
+        document
+            .getElementById("depositForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+
+                    event.preventDefault();
+
+
+
+                    /* Get amount */
+
+                    const amountInput =
+                        document
+                            .getElementById("amount");
+
+
+                    const amount =
+                        Number(
+                            amountInput.value
+                        );
+
+
+
+                    /* Result */
+
+                    const result =
+                        document
+                            .getElementById("result");
+
+
+
+                    result.innerHTML = "";
+
+
+
+                    /* Validate amount */
+
+                    if (
+                        isNaN(amount) ||
+                        amount <= 0
+                    ) {
+
+                        result.innerHTML = `
+
+                            <div class="error">
+
+                                ❌ Amount must be greater than zero.
+
+                            </div>
+
+                        `;
+
+                        return;
+
+                    }
+
+
+
+                    /* ==========================================
+                       CALL BACKEND
+                       
+                       IMPORTANT:
+                       This URL matches BankAccountController
+                       ========================================== */
+
+                    fetch(
+                        "/api/bank/deposit?amount="
+                        + encodeURIComponent(amount),
+                        {
+                            method: "POST"
+                        }
+                    )
+
+
+                    .then(response => {
+
+
+                        if (!response.ok) {
+
+                            return response.text()
+                                .then(message => {
+
+                                    throw new Error(
+                                        message ||
+                                        "Deposit failed"
+                                    );
+
+                                });
+
+                        }
+
+
+                        return response.json();
+
+                    })
+
+
+                    .then(account => {
+
+
+                        /* ==========================================
+                           DEPOSIT SUCCESS
+                        ========================================== */
+
+                        result.innerHTML = `
+
+                            <div class="success">
+
+                                ✅ Deposit Successful!
+
+                                <br><br>
+
+                                Amount Deposited:
+
+                                ₹${Number(account.balance -
+                                    Number(
+                                        document
+                                            .getElementById("currentBalance")
+                                            .textContent
+                                            .replace("₹", "")
+                                            .trim()
+                                    )).toFixed(2)}
+
+                                <br>
+
+                                New Balance:
+
+                                ₹${Number(account.balance).toFixed(2)}
+
+                            </div>
+
+                        `;
+
+
+
+                        /* Update balance */
+
+                        document
+                            .getElementById("currentBalance")
+                            .textContent =
+                            "₹ " +
+                            Number(account.balance)
+                                .toFixed(2);
+
+
+
+                        /* Clear input */
+
+                        amountInput.value = "";
+
+                    })
+
+
+                    .catch(error => {
+
+
+                        console.error(error);
+
+
+                        result.innerHTML = `
+
+                            <div class="error">
+
+                                ❌ ${error.message}
+
+                            </div>
+
+                        `;
+
+                    });
+
+                }
+            );
+
+
+
+        /* ==========================================
+           GO TO CUSTOMER DASHBOARD
+        ========================================== */
+
+        function goDashboard() {
+
+            window.location.href =
+                "/customer-dashboard";
+
+        }
+
+
+
+        /* ==========================================
+           LOGOUT
+        ========================================== */
+
+        function logout() {
+
+
+            fetch(
+                "/api/customers/logout",
+                {
+                    method: "POST"
+                }
+            )
+
+
+            .then(() => {
+
+                window.location.href =
+                    "/login";
+
+            })
+
+
+            .catch(error => {
+
+                console.error(error);
+
+                window.location.href =
+                    "/login";
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
